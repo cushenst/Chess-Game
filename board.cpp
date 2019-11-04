@@ -74,9 +74,20 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
     if ((int) moveLocation[0] - 97 > 7 or (int) moveLocation[1] - 48 > 8)
         return 1;
     if (takePiece != 33) {
-        cout << "here 33";
+        cout << "here";
         int isMoved = piecePointers[location]->move(moveLocation);
-        if (isMoved == 0 and piecePointers[takePiece]->colour != piecePointers[location]->colour) {
+        if (isMoved == 0 and piecePointers[takePiece]->colour != piecePointers[location]->colour and
+            (piecePointers[location]->type == 'p' and
+             ((moveLocation[0] == pieceLocation[1] + 1 or moveLocation[0] == pieceLocation[1] - 1) and
+              (pieceLocation[1] == moveLocation[0] - 1 or pieceLocation[1] == moveLocation[0] + 1)))) {
+            piecePointers[location]->pos[0] = moveLocation[1];
+            piecePointers[location]->pos[1] = moveLocation[0];
+            piecePointers[takePiece]->pos[0] = '9';
+            piecePointers[takePiece]->pos[1] = 'j';
+            delete piecePointers[takePiece];
+            return 0;
+        } else if (isMoved == 0 and piecePointers[takePiece]->colour != piecePointers[location]->colour and
+                   (piecePointers[location]->type != 'p')) {
             piecePointers[location]->pos[0] = moveLocation[1];
             piecePointers[location]->pos[1] = moveLocation[0];
             piecePointers[takePiece]->pos[0] = '9';
@@ -86,6 +97,7 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
         }
         return 1;
     } else if (pieceLocation[1] == moveLocation[0] and piecePointers[location]->type == 'p') {
+        cout << "heere";
         int isMoved = piecePointers[location]->move(moveLocation);
         if (isMoved == 0) {
             piecePointers[location]->pos[0] = moveLocation[1];
@@ -135,8 +147,8 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
             return 0;
         }
 
-    } else {
-
+    } else if (piecePointers[location]->type == 'n') {
+        cout << "heeeerre";
         int isMoved = piecePointers[location]->move(moveLocation);
         if (isMoved == 0) {
             piecePointers[location]->pos[0] = moveLocation[1];
@@ -145,5 +157,36 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
         } else {
             return 1;
         }
-    }
+    } else if (piecePointers[location]->type == 'b') {
+        int positiveUpDown = 0;
+        int positiveLeftRight = 0;
+        char leftRight = piecePointers[location]->pos[1];
+        //same number;
+        if (piecePointers[location]->pos[0] > moveLocation[1])
+            positiveUpDown--;
+        else
+            positiveUpDown++;
+        if (piecePointers[location]->pos[1] > moveLocation[0]) {
+            positiveLeftRight--;
+        } else
+            positiveLeftRight++;
+        for (int i = (int) piecePointers[location]->pos[0] - 48;
+             i != (int) moveLocation[1] - 48; i = i + positiveUpDown) {
+            leftRight = static_cast<char>(leftRight + positiveLeftRight);
+            cout << leftRight;
+            char testLocation[2];
+            testLocation[0] = "12345678"[i];
+            testLocation[1] = leftRight;
+            if (isSquareOccupied(testLocation) != 33) {
+                return 1;
+            }
+        }
+        if (leftRight != moveLocation[0])
+            return 1;
+        cout << moveLocation[1] << leftRight;
+        piecePointers[location]->pos[0] = moveLocation[1];
+        piecePointers[location]->pos[1] = leftRight;
+        return 0;
+    } else
+        return 1;
 }

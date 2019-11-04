@@ -24,6 +24,8 @@ private:
     int knightMove(char location[2]);
 
     int rookMove(char location[2]);
+
+    int kingMove(char location[2]);
 };
 
 #endif //LAB4_CHESS_PIECE_H

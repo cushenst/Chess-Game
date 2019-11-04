@@ -45,6 +45,8 @@ int chess_piece::move(char location[2]) {
         returnValue = knightMove(location);
     } else if (type == 'r') {
         returnValue = rookMove(location);
+    } else if (type == 'k') {
+        returnValue = kingMove(location);
     }
     return returnValue;
 }
@@ -89,6 +91,16 @@ int chess_piece::rookMove(char location[2]) {
     if (pos[0] == location[1] or pos[1] == location[0]) {
         return 0;
     } else
+        return 1;
+}
+
+int chess_piece::kingMove(char location[2]) {
+    if ((static_cast<char>(location[1] - 1) == pos[0] or static_cast<char>(location[1] + 1) == pos[0] or
+         location[1] == pos[0]) and
+        (static_cast<char>(location[0] + 1) == pos[1] or static_cast<char>(location[0] - 1) == pos[1] or
+         location[0] == pos[1]))
+        return 0;
+    else
         return 1;
 }
 

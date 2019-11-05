@@ -14,7 +14,7 @@ application::~application() {
 
 }
 
-//sample Game = a2a4b7b5a4b5g8f6e2e4f6e4f2f3a7a6f3e4a6b5a1a3a8a3e4e5a3f3g2f3h7h6f1b5h8h7b5a6c8a6b2b3
+//sample Game = a2a4b7b5a4b5g8f6e2e4f6e4f2f3a7a6f3e4a6b5a1a3a8a3e4e5a3f3g2f3h7h6f1b5h8h7b5a6c8a6b2b3e7e6b3b4d8h4f3f4h4h3
 
 void application::run() {
     board playingBoard;

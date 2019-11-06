@@ -96,9 +96,9 @@ int chess_piece::rookMove(char location[2]) {
 
 int chess_piece::kingMove(char location[2]) {
     if ((static_cast<char>(location[1] - 1) == pos[0] or static_cast<char>(location[1] + 1) == pos[0] or
-         location[1] == pos[0]) and
+         location[1] == pos[0] or pos[0] == location[1]) and
         (static_cast<char>(location[0] + 1) == pos[1] or static_cast<char>(location[0] - 1) == pos[1] or
-         location[0] == pos[1]))
+         location[0] == pos[1] or pos[1] == location[0]) and (pos[0] != location[1] or pos[1] != location[0]))
         return 0;
     else
         return 1;

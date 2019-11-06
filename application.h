@@ -15,6 +15,7 @@ public:
 
     void run();
 
+    int test();
 private:
     char nextTurn(char turn);
 };

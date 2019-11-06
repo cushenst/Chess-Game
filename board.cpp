@@ -73,7 +73,8 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
     int location = isSquareOccupied(pieceLocation);
     if ((int) moveLocation[0] - 97 > 7 or (int) moveLocation[1] - 48 > 8)
         return 1;
-    if (takePiece != 33 and (piecePointers[location]->type == 'p' or piecePointers[location]->type == 'n')) {
+    if (takePiece != 33 and (piecePointers[location]->type == 'p' or piecePointers[location]->type == 'n' or
+                             piecePointers[location]->type == 'k')) {
         int isMoved = piecePointers[location]->move(moveLocation);
         if (isMoved == 0 and piecePointers[takePiece]->colour != piecePointers[location]->colour and
             (piecePointers[location]->type == 'p' and
@@ -135,6 +136,7 @@ int board::movePiece(char pieceLocation[2], char moveLocation[2]) {
     } else if (piecePointers[location]->type == 'k') {
         int isMoved = piecePointers[location]->move(moveLocation);
         if (isMoved == 0) {
+
             piecePointers[location]->pos[0] = moveLocation[1];
             piecePointers[location]->pos[1] = moveLocation[0];
             return 0;

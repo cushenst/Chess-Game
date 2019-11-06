@@ -5,6 +5,7 @@
 #include "application.h"
 #include "board.h"
 #include <iostream>
+#include <string>
 
 application::application() {
 
@@ -14,7 +15,7 @@ application::~application() {
 
 }
 
-//sample Game = a2a4b7b5a4b5g8f6e2e4f6e4f2f3a7a6f3e4a6b5a1a3a8a3e4e5a3f3g2f3h7h6f1b5h8h7b5a6c8a6b2b3e7e6b3b4d8h4f3f4h4h3
+//sample Game = a2a4b7b5a4b5g8f6e2e4f6e4f2f3a7a6f3e4a6b5a1a3a8a3e4e5a3f3g2f3h7h6f1b5h8h7b5a6c8a6b2b3e7e6b3b4d8h4f3f4h4h3g1h3
 
 void application::run() {
     board playingBoard;
@@ -57,4 +58,27 @@ char application::nextTurn(char turn) {
         return 'b';
     else
         return 'w';
+}
+
+int application::test() {
+    board playingBoard;
+    char movePiece[2];
+    char selectPiece[2];
+    std::string moves = "a2a4b7b5a4b5g8f6e2e4f6e4f2f3a7a6f3e4a6b5a1a3a8a3e4e5a3f3g2f3h7h6f1b5h8h7b5a6c8a6b2b3e7e6b3b4d8h4f3f4h4h3g1h3";
+    for (int i = 0; i < 108; i++) {
+        selectPiece[1] = moves[i];
+        i++;
+        selectPiece[0] = moves[i];
+        i++;
+        movePiece[0] = moves[i];
+        i++;
+        movePiece[1] = moves[i];
+
+        int error = playingBoard.movePiece(selectPiece, movePiece);
+        if (error != 0) {
+            std::cout << "Quitting...";
+            return 1;
+        }
+    }
+    return 0;
 }

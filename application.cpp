@@ -51,6 +51,7 @@ void application::run() {
         std::cout << "\nPlease select a piece: \t";
         std::cin >> pieceSelect[1];
     }
+    exit(0);
 }
 
 char application::nextTurn(char turn) {

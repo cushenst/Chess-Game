@@ -4,6 +4,7 @@
 
 #include "application.h"
 #include "board.h"
+#include "move.h"
 #include <iostream>
 #include <string>
 
@@ -23,12 +24,25 @@ void application::run() {
     char pieceSelect[2];
     char pieceMove[2];
     char turn = 'w';
+    int counter = 0;
+    move *firstMove = new move;
+    move *lastMove = firstMove;
     std::cout << "\nIt is now " << turn << "'s turn.";
     std::cout << "\nPlease select a piece: \t";
     std::cin >> pieceSelect[1];
     while (pieceSelect[1] != 'q' and pieceSelect[1] != 'Q') {
+        if (pieceSelect[1] == 'l' or pieceSelect[1] == 'L') {
+            while (pieceSelect[1] == 'L' or pieceSelect[1] == 'l') {
+                printMoves(firstMove);
+                std::cout << "\nPlease select a piece: \t";
+                std::cin >> pieceSelect[1];
+            }
+        }
         if (pieceSelect[1] == 'r' or pieceSelect[1] == 'R') {
             run();
+        }
+        if (pieceSelect[1] == 'q' or pieceSelect[1] == 'Q') {
+            exit(0);
         }
         std::cin >> pieceSelect[0];
         int pieceLocation = playingBoard.isSquareOccupied(pieceSelect);
@@ -37,6 +51,12 @@ void application::run() {
             std::cin >> pieceMove[0] >> pieceMove[1];
             if (playingBoard.movePiece(pieceSelect, pieceMove) == 0) {
                 turn = application::nextTurn(turn);
+                move *nextMove = new move;
+                nextMove->addMove(pieceSelect, pieceMove);
+                counter++;
+                nextMove->counter = counter;
+                lastMove->next = nextMove;
+                lastMove = nextMove;
                 std::cout << "\nIt is now " << turn << "'s Turn\n";
                 playingBoard.printBoard();
             } else {
@@ -82,4 +102,17 @@ int application::test() {
         }
     }
     return 0;
+}
+
+
+void application::printMoves(move *firstMove) {
+    move *print = firstMove;
+    print = print->next;
+    std::cout << "\nThe first move was " << print->previousPosition[1] << print->previousPosition[0] << " to "
+              << print->currentPosition << std::endl;
+    while (print != nullptr) {
+        std::cout << "The next move was " << print->previousPosition[1] << print->previousPosition[0] << " to "
+                  << print->currentPosition << std::endl;
+        print = print->next;
+    }
 }

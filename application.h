@@ -6,6 +6,7 @@
 #define LAB4_APPLICATION_H
 
 #include "board.h"
+#include "move.h"
 
 class application {
 public:
@@ -18,6 +19,8 @@ public:
     int test();
 private:
     char nextTurn(char turn);
+
+    void printMoves(move *firstMove);
 };
 
 

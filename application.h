@@ -17,10 +17,13 @@ public:
     void run();
 
     int test();
+
 private:
     char nextTurn(char turn);
 
-    void printMoves(move *firstMove);
+    static void printMoves(move *firstMove);
+
+    static void deleteList(move *firstMove);
 };
 
 

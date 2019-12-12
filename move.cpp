@@ -9,7 +9,7 @@ move::move() {
 }
 
 move::~move() {
-    delete this;
+    std::cout << counter << std::endl;
 }
 
 int move::addMove(char pos[2], char posNext[2]) {

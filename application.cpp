@@ -39,6 +39,7 @@ void application::run() {
             }
         }
         if (pieceSelect[1] == 'r' or pieceSelect[1] == 'R') {
+            deleteList(firstMove);
             run();
         }
         if (pieceSelect[1] == 'q' or pieceSelect[1] == 'Q') {
@@ -53,6 +54,7 @@ void application::run() {
                 turn = application::nextTurn(turn);
                 move *nextMove = new move;
                 nextMove->addMove(pieceSelect, pieceMove);
+                nextMove->colour = turn;
                 counter++;
                 nextMove->counter = counter;
                 lastMove->next = nextMove;
@@ -107,12 +109,24 @@ int application::test() {
 
 void application::printMoves(move *firstMove) {
     move *print = firstMove;
-    print = print->next;
-    std::cout << "\nThe first move was " << print->previousPosition[1] << print->previousPosition[0] << " to "
-              << print->currentPosition << std::endl;
+    if (print != nullptr) {
+        print = print->next;
+        std::cout << "\nThe first move was " << print->previousPosition[1] << print->previousPosition[0] << " to "
+                  << print->currentPosition << std::endl;
+        print = print->next;
+    }
     while (print != nullptr) {
         std::cout << "The next move was " << print->previousPosition[1] << print->previousPosition[0] << " to "
                   << print->currentPosition << std::endl;
         print = print->next;
+    }
+}
+
+void application::deleteList(move *firstMove) {
+    move *currentElement = firstMove;
+    while (currentElement != nullptr) {
+        move *previousElement = currentElement;
+        currentElement = currentElement->next;
+        delete previousElement;
     }
 }
